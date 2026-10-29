@@ -32,12 +32,12 @@ export const ASK_SCREENS: readonly AskContent[] = [
       width: 220,
       height: 184,
     },
-    heading: "Shruti, I'm sorry.",
+    heading: "Manvi, I'm sorry.",
     body: 'I was wrong, and it has sat with me all day. Will you forgive me?',
     noLabels: ['No', 'please', 'pretty please', 'last time', 'please...'],
     okayLabel: "It's okay",
     arrival: "The it's okay button has appeared, below the no button.",
-    docTitle: 'Sorry, Shruti',
+    docTitle: 'Sorry, Manvi',
   },
   {
     id: 'date',
@@ -52,7 +52,7 @@ export const ASK_SCREENS: readonly AskContent[] = [
     noLabels: ['No', 'please', 'please'],
     okayLabel: "Yes, let's go",
     arrival: "The yes, let's go button has appeared, below the no button.",
-    docTitle: 'One more chance, Shruti?',
+    docTitle: 'One more chance, Manvi?',
   },
 ]
 

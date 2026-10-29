@@ -83,6 +83,12 @@ export function Celebration({ onReplay }: Props) {
             >
               {CELEBRATION.body}
             </p>
+            <p
+              className="anim-copy mt-2 text-[1.35rem] text-ink"
+              style={{ '--delay': '620ms' } as CSSProperties}
+            >
+              {CELEBRATION.closing}
+            </p>
           </div>
         </div>
 

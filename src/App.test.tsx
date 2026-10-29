@@ -27,10 +27,10 @@ const no = () =>
 const heading = () => screen.getByRole('heading').textContent
 const okay = (name: RegExp) => screen.queryByRole('button', { name })
 
-test('the apology opens with Shruti named and no way forward but the no button', () => {
+test('the apology opens with Manvi named and no way forward but the no button', () => {
   render(<App />)
 
-  expect(heading()).toBe("Shruti, I'm sorry.")
+  expect(heading()).toBe("Manvi, I'm sorry.")
   expect(no().textContent).toBe('No')
   expect(okay(/it's okay/i)).toBeNull()
 })
@@ -97,6 +97,7 @@ test('the second-date question follows the same pattern and ends in the celebrat
   await user.click(screen.getByRole('button', { name: /yes, let's go/i }))
 
   expect(heading()).toBe("It's a date...")
+  expect(screen.getByText('Waffle it is.')).toBeTruthy()
 })
 
 test('each screen shows one illustration with a real description', async () => {
