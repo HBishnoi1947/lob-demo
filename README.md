@@ -1,4 +1,4 @@
-# Sorry, Shruti
+# Sorry, Manvi
 
 A small two-question page: an apology, then an invitation to a second date.
 The "no" button has opinions about being pressed.
