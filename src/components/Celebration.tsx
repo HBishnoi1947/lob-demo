@@ -1,6 +1,5 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useMemo, useRef } from 'react'
-import { DateCode } from '@/components/DateCode'
 import { Plate } from '@/components/Plate'
 import { Shell } from '@/components/Shell'
 import { CELEBRATION } from '@/content/screens'
@@ -30,11 +29,10 @@ function makePetals(): Petal[] {
 }
 
 type Props = {
-  finishedAt: Date
   onReplay: () => void
 }
 
-export function Celebration({ finishedAt, onReplay }: Props) {
+export function Celebration({ onReplay }: Props) {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const reducedMotion = useReducedMotion()
   const petals = useMemo(() => (reducedMotion ? [] : makePetals()), [reducedMotion])
@@ -67,8 +65,8 @@ export function Celebration({ finishedAt, onReplay }: Props) {
       </div>
 
       <Shell>
-        <div className="flex flex-1 flex-col justify-center gap-6 text-center">
-          <Plate illustration={CELEBRATION.illustration} compact />
+        <div className="flex flex-1 flex-col justify-center gap-8 text-center">
+          <Plate illustration={CELEBRATION.illustration} />
 
           <div>
             <h1
@@ -94,15 +92,11 @@ export function Celebration({ finishedAt, onReplay }: Props) {
           </div>
         </div>
 
-        <div className="anim-copy" style={{ '--delay': '760ms' } as CSSProperties}>
-          <DateCode when={finishedAt} />
-        </div>
-
-        <div className="mt-6 text-center">
+        <div className="text-center">
           <button
             type="button"
             onClick={onReplay}
-            className="min-h-11 px-3 py-2 text-ink-soft underline underline-offset-4"
+            className="min-h-11 rounded-[3px] border border-ink-soft px-5 py-2 text-ink-soft"
           >
             {CELEBRATION.replayLabel}
           </button>
