@@ -134,3 +134,41 @@ test('the okay button is announced when it appears', async () => {
 
   expect(live()).toMatch(/it's okay button has appeared/i)
 })
+
+async function reachTheEnd(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(no())
+  await user.click(no())
+  await user.click(screen.getByRole('button', { name: /it's okay/i }))
+  await user.click(no())
+  await user.click(no())
+  await user.click(screen.getByRole('button', { name: /yes, let's go/i }))
+}
+
+test('the last screen issues a code stamped with the day and minute', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await reachTheEnd(user)
+
+  const code = screen.getByText(/^WAFFLE-/)
+  expect(code.textContent).toMatch(/^WAFFLE-\d{2}[A-Z]{3}-\d{4}$/)
+})
+
+test('the copy button puts the code on the clipboard and says so', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await reachTheEnd(user)
+
+  const code = screen.getByText(/^WAFFLE-/).textContent
+  await user.click(screen.getByRole('button', { name: /copy the code/i }))
+
+  expect(await navigator.clipboard.readText()).toBe(code)
+  expect(screen.getByRole('button', { name: /copied/i })).toBeTruthy()
+})
+
+test('she is told where to send it', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await reachTheEnd(user)
+
+  expect(screen.getByText(/send this to me on whatsapp/i)).toBeTruthy()
+})

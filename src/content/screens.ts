@@ -68,5 +68,12 @@ export const CELEBRATION = {
   /** The last beat on the page. */
   closing: 'Waffle it is.',
   docTitle: "It's a date...",
+  ticketLine: 'Admit two',
+  copyLabel: 'Copy the code',
+  copiedLabel: 'Copied',
+  manualLabel: 'Copy it by hand',
+  copiedAnnouncement: 'The code is on your clipboard.',
+  manualAnnouncement: 'The code is selected. Copy it by hand.',
+  instruction: 'Send this to me on WhatsApp, so I know you made it to the end.',
   replayLabel: 'Read it again',
 }

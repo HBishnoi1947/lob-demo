@@ -2,6 +2,8 @@ import type { Illustration } from '@/content/screens'
 
 type Props = {
   illustration: Illustration
+  /** The celebration screen carries a ticket too, so its plate gives way. */
+  compact?: boolean
 }
 
 /**
@@ -10,10 +12,14 @@ type Props = {
  * window keeps them looking like plates in the same book — and keeps the page
  * from shifting as she moves between screens.
  */
-export function Plate({ illustration }: Props) {
+export function Plate({ illustration, compact = false }: Props) {
   return (
     <figure className="anim-plate mx-auto w-fit max-w-full border border-rule bg-plate p-3">
-      <div className="flex h-[min(34vh,14rem)] w-[min(70vw,17rem)] items-center justify-center border border-rule/60 bg-plate p-2">
+      <div
+        className={`flex w-[min(70vw,17rem)] items-center justify-center border border-rule/60 bg-plate p-2 ${
+          compact ? 'h-[min(19vh,8.5rem)]' : 'h-[min(34vh,14rem)]'
+        }`}
+      >
         <img
           src={illustration.src}
           alt={illustration.alt}
