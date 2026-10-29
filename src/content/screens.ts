@@ -33,7 +33,7 @@ export const ASK_SCREENS: readonly AskContent[] = [
       height: 184,
     },
     heading: "Manvi, I'm sorry.",
-    body: 'I was wrong, and it has sat with me all day. Will you forgive me?',
+    body: 'Will you forgive me?..... please',
     noLabels: ['No', 'please', 'pretty please', 'last time', 'please...'],
     okayLabel: "It's okay",
     arrival: "The it's okay button has appeared, below the no button.",
@@ -65,6 +65,8 @@ export const CELEBRATION = {
   } satisfies Illustration,
   heading: "It's a date...",
   body: "Our second one...",
+  /** The last beat on the page. */
+  closing: 'Waffle it is.',
   docTitle: "It's a date...",
   replayLabel: 'Read it again',
 }
