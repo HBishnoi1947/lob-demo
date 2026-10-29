@@ -1,27 +1,30 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useMemo, useRef } from 'react'
-import { EmojiScene } from '@/components/EmojiScene'
+import { Plate } from '@/components/Plate'
 import { Shell } from '@/components/Shell'
-import { CELEBRATION, CONFETTI } from '@/content/screens'
+import { CELEBRATION } from '@/content/screens'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
-const PIECE_COUNT = 18
+const PETAL_COUNT = 12
+const PETAL_TINTS = ['var(--color-oxblood)', 'var(--color-gilt)', 'var(--color-rule)']
 
-type Piece = {
-  emoji: string
+type Petal = {
   left: number
+  tint: string
   delay: number
   duration: number
+  drift: number
   spin: number
 }
 
-function makeConfetti(): Piece[] {
-  return Array.from({ length: PIECE_COUNT }, (_, index) => ({
-    emoji: CONFETTI[index % CONFETTI.length],
-    left: Math.random() * 92,
-    delay: Math.random() * 1600,
-    duration: 2400 + Math.random() * 1800,
-    spin: 220 + Math.random() * 420,
+function makePetals(): Petal[] {
+  return Array.from({ length: PETAL_COUNT }, (_, index) => ({
+    left: Math.random() * 94,
+    tint: PETAL_TINTS[index % PETAL_TINTS.length],
+    delay: Math.random() * 6000,
+    duration: 7000 + Math.random() * 5000,
+    drift: (Math.random() - 0.5) * 120,
+    spin: 180 + Math.random() * 420,
   }))
 }
 
@@ -32,7 +35,7 @@ type Props = {
 export function Celebration({ onReplay }: Props) {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const reducedMotion = useReducedMotion()
-  const confetti = useMemo(() => (reducedMotion ? [] : makeConfetti()), [reducedMotion])
+  const petals = useMemo(() => (reducedMotion ? [] : makePetals()), [reducedMotion])
 
   useEffect(() => {
     document.title = CELEBRATION.docTitle
@@ -42,58 +45,52 @@ export function Celebration({ onReplay }: Props) {
   return (
     <>
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
-        {confetti.map((piece, index) => (
+        {petals.map((petal, index) => (
           <span
             key={index}
-            className="anim-confetti absolute top-0 text-2xl"
+            className="anim-petal absolute top-0 block h-3.5 w-2.5 opacity-70"
             style={
               {
-                left: `${piece.left}%`,
-                '--delay': `${piece.delay}ms`,
-                '--dur': `${piece.duration}ms`,
-                '--spin': `${piece.spin}deg`,
+                left: `${petal.left}%`,
+                background: petal.tint,
+                borderRadius: '60% 40% 55% 45% / 50% 58% 42% 50%',
+                '--delay': `${petal.delay}ms`,
+                '--dur': `${petal.duration}ms`,
+                '--drift': `${petal.drift}px`,
+                '--spin': `${petal.spin}deg`,
               } as CSSProperties
             }
-          >
-            {piece.emoji}
-          </span>
+          />
         ))}
       </div>
 
       <Shell>
-        <div className="flex flex-1 flex-col justify-center gap-7">
-          <EmojiScene scene={CELEBRATION.scene} />
+        <div className="flex flex-1 flex-col justify-center gap-8 text-center">
+          <Plate illustration={CELEBRATION.illustration} />
 
           <div>
             <h1
               ref={headingRef}
               tabIndex={-1}
-              className="anim-copy text-[clamp(2rem,8.5vw,2.6rem)]"
-              style={{ '--delay': '160ms' } as CSSProperties}
+              className="anim-copy text-[clamp(2rem,8.5vw,2.75rem)]"
+              style={{ '--delay': '180ms' } as CSSProperties}
             >
               {CELEBRATION.heading}
             </h1>
             <p
-              lang="hi"
-              className="anim-copy mt-1 font-display text-xl text-marigold"
-              style={{ '--delay': '280ms' } as CSSProperties}
-            >
-              {CELEBRATION.aside}
-            </p>
-            <p
-              className="anim-copy mt-3 max-w-[32ch] text-cream-dim"
-              style={{ '--delay': '380ms' } as CSSProperties}
+              className="anim-copy mx-auto mt-3 max-w-[30ch] text-ink-soft"
+              style={{ '--delay': '320ms' } as CSSProperties}
             >
               {CELEBRATION.body}
             </p>
           </div>
         </div>
 
-        <div className="pt-3">
+        <div className="text-center">
           <button
             type="button"
             onClick={onReplay}
-            className="min-h-11 rounded-full border-2 border-ink-edge px-5 py-2 font-semibold text-cream-dim"
+            className="min-h-11 rounded-[3px] border border-ink-soft px-5 py-2 text-ink-soft"
           >
             {CELEBRATION.replayLabel}
           </button>

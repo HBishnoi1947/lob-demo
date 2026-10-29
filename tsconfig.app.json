@@ -17,7 +17,10 @@
     "jsx": "react-jsx",
 
     /* Path alias, matching vite.config.ts */
-    "paths": { "@/*": ["./src/*"] },
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./assets/*"]
+    },
 
     /* Linting */
     "noUnusedLocals": true,

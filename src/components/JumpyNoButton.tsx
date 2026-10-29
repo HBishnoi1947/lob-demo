@@ -70,10 +70,10 @@ export function JumpyNoButton({ labels, taps, areaRef, onTap }: Props) {
       type="button"
       onClick={handleClick}
       onAnimationEnd={() => setSquishing(false)}
-      className={`jump-ease absolute inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border-2 border-ink-edge bg-ink-raised font-semibold text-cream-dim ${placement.className} ${squishing ? 'anim-squish' : ''}`}
+      className={`jump-ease absolute inline-flex min-h-11 min-w-11 items-center justify-center rounded-[3px] border border-ink-soft bg-plate text-ink-soft ${placement.className} ${squishing ? 'anim-squish' : ''}`}
       style={{
         ...placement.style,
-        fontSize: `${(1.0625 * scale).toFixed(3)}rem`,
+        fontSize: `${(1.125 * scale).toFixed(3)}rem`,
         paddingInline: `${(1.5 * scale).toFixed(3)}rem`,
         paddingBlock: `${(0.6 * scale).toFixed(3)}rem`,
       }}

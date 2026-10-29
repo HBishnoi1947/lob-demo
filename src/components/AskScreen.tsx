@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { EmojiScene } from '@/components/EmojiScene'
 import { JumpyNoButton } from '@/components/JumpyNoButton'
+import { Plate } from '@/components/Plate'
 import { Shell } from '@/components/Shell'
 import type { AskContent } from '@/content/screens'
 
@@ -26,28 +26,21 @@ export function AskScreen({ content, onAccept }: Props) {
 
   return (
     <Shell>
-      <div className="flex flex-1 flex-col justify-center gap-7 pb-2">
-        <EmojiScene scene={content.scene} />
+      <div className="flex flex-1 flex-col justify-center gap-8 text-center">
+        <Plate illustration={content.illustration} />
 
         <div>
           <h1
             ref={headingRef}
             tabIndex={-1}
-            className="anim-copy text-[clamp(2rem,8.5vw,2.6rem)]"
-            style={{ '--delay': '160ms' } as CSSProperties}
+            className="anim-copy text-[clamp(2rem,8.5vw,2.75rem)]"
+            style={{ '--delay': '180ms' } as CSSProperties}
           >
             {content.heading}
           </h1>
           <p
-            lang="hi"
-            className="anim-copy mt-1 font-display text-xl text-marigold"
-            style={{ '--delay': '280ms' } as CSSProperties}
-          >
-            {content.aside}
-          </p>
-          <p
-            className="anim-copy mt-3 max-w-[32ch] text-cream-dim"
-            style={{ '--delay': '380ms' } as CSSProperties}
+            className="anim-copy mx-auto mt-3 max-w-[30ch] text-ink-soft"
+            style={{ '--delay': '320ms' } as CSSProperties}
           >
             {content.body}
           </p>
@@ -56,10 +49,7 @@ export function AskScreen({ content, onAccept }: Props) {
 
       {/* The no button roams inside this box and nowhere else, so it can
           never leave the screen or cover the okay button. */}
-      <div
-        ref={playAreaRef}
-        className="relative h-40 rounded-3xl border border-dashed border-ink-line/60"
-      >
+      <div ref={playAreaRef} className="relative h-36">
         <JumpyNoButton
           labels={content.noLabels}
           taps={taps}
@@ -68,12 +58,12 @@ export function AskScreen({ content, onAccept }: Props) {
         />
       </div>
 
-      <div className="min-h-[4.75rem] pt-3">
+      <div className="min-h-[4.5rem]">
         {unlocked && (
           <button
             type="button"
             onClick={onAccept}
-            className="anim-okay w-full rounded-full bg-marigold px-6 py-4 font-display text-xl font-bold text-ink shadow-[0_8px_0_0_var(--color-marigold-deep)] active:translate-y-[3px] active:shadow-[0_5px_0_0_var(--color-marigold-deep)]"
+            className="anim-okay w-full rounded-[3px] bg-oxblood px-6 py-3.5 text-xl text-paper transition-colors active:bg-oxblood-deep"
           >
             {content.okayLabel}
           </button>

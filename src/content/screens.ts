@@ -1,21 +1,21 @@
-export type Scene = {
-  /** Shruti. */
-  her: string
-  /** Me, apologising. */
-  him: string
-  /** Whatever I'm holding out as a peace offering. */
-  prop: string
-  /** Read aloud in place of the emoji, which are decorative on their own. */
-  description: string
+import angry from '@assets/angry.png'
+import please from '@assets/please.png'
+import recorded from '@assets/recorded.png'
+
+export type Illustration = {
+  src: string
+  /** Described for anyone who cannot see the plate. */
+  alt: string
+  width: number
+  height: number
 }
 
 export type AskContent = {
   id: 'sorry' | 'date'
-  scene: Scene
+  illustration: Illustration
   heading: string
-  aside: string
   body: string
-  /** Shown in order as she keeps tapping No. */
+  /** Shown in order as she keeps tapping no. */
   noLabels: readonly string[]
   okayLabel: string
   /** Announced to screen readers when the okay button turns up. */
@@ -26,52 +26,45 @@ export type AskContent = {
 export const ASK_SCREENS: readonly AskContent[] = [
   {
     id: 'sorry',
-    scene: {
-      her: '😤',
-      him: '🙇‍♂️',
-      prop: '💐',
-      description:
-        'Shruti standing with her cheeks puffed out, cross with me, while I bow and hold out a bunch of flowers.',
+    illustration: {
+      src: angry,
+      alt: 'Two cartoon bears: a small white bear sulking with her eyes shut and her cheeks puffed out, while a brown bear gently reaches out to her.',
+      width: 220,
+      height: 184,
     },
-    heading: 'Shruti, I am so sorry.',
-    aside: 'माफ़ कर दो ना',
-    body: 'I messed up, and it has been sitting on my chest all day. Will you forgive me?',
-    noLabels: ['No', 'Really? 🥺'],
+    heading: "Shruti, I'm sorry.",
+    body: 'I was wrong, and it has sat with me all day. Will you forgive me?',
+    noLabels: ['No', 'please', 'pretty please', 'last time', 'please...'],
     okayLabel: "It's okay",
-    arrival: "The it's okay button is here now, just below the no button.",
+    arrival: "The it's okay button has appeared, below the no button.",
     docTitle: 'Sorry, Shruti',
   },
   {
     id: 'date',
-    scene: {
-      her: '🙂',
-      him: '🥺',
-      prop: '🌹',
-      description:
-        'Shruti softening into a small smile while I hold out a single rose and ask hopefully.',
+    illustration: {
+      src: please,
+      alt: 'An illustrated couple: a boy carrying a girl in his arms, her head resting on his shoulder, both smiling with their eyes closed.',
+      width: 658,
+      height: 658,
     },
     heading: 'One more chance?',
-    aside: 'फिर मिलोगी ना?',
-    body: 'Come out with me again — our second date. I will plan the whole evening.',
-    noLabels: ['No', 'Please? 🌹'],
-    okayLabel: "Okay, let's go",
-    arrival: "The okay, let's go button is here now, just below the no button.",
+    body: 'Come out with me again. Our second date.',
+    noLabels: ['No', 'please', 'please'],
+    okayLabel: "Yes, let's go",
+    arrival: "The yes, let's go button has appeared, below the no button.",
     docTitle: 'One more chance, Shruti?',
   },
 ]
 
 export const CELEBRATION = {
-  heading: "It's a date, Shruti!",
-  aside: 'श्रुति 💕',
-  body: 'Date number two is on. I pick the place, you pick the dessert — that is the deal.',
-  scene: {
-    her: '🥰',
-    him: '🤗',
-    prop: '🎟️',
-    description: 'Shruti and me grinning at each other, two tickets in hand.',
-  } satisfies Scene,
-  docTitle: "It's a date, Shruti!",
-  replayLabel: 'Play it again',
+  illustration: {
+    src: recorded,
+    alt: 'An illustrated couple in a close hug, one lifting the other clean off the ground.',
+    width: 415,
+    height: 739,
+  } satisfies Illustration,
+  heading: "It's a date...",
+  body: "Our second one...",
+  docTitle: "It's a date...",
+  replayLabel: 'Read it again',
 }
-
-export const CONFETTI = ['💕', '🎉', '💛', '🌸', '✨', '💐'] as const

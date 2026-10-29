@@ -22,14 +22,15 @@ beforeAll(() => {
 
 afterEach(cleanup)
 
-const no = () => screen.getByRole('button', { name: /no|really|please/i })
+const no = () =>
+  screen.getByRole('button', { name: /^(no|please|pretty please|last time|please\.\.\.)$/i })
 const heading = () => screen.getByRole('heading').textContent
 const okay = (name: RegExp) => screen.queryByRole('button', { name })
 
 test('the apology opens with Shruti named and no way forward but the no button', () => {
   render(<App />)
 
-  expect(heading()).toBe('Shruti, I am so sorry.')
+  expect(heading()).toBe("Shruti, I'm sorry.")
   expect(no().textContent).toBe('No')
   expect(okay(/it's okay/i)).toBeNull()
 })
@@ -40,13 +41,34 @@ test('two taps on no reveal the okay button, which leads to the date question', 
 
   await user.click(no())
   expect(okay(/it's okay/i)).toBeNull()
-  expect(no().textContent).toContain('Really?')
+  expect(no().textContent).toBe('please')
 
   await user.click(no())
   await user.click(screen.getByRole('button', { name: /it's okay/i }))
 
   expect(heading()).toBe('One more chance?')
-  expect(okay(/let's go/i)).toBeNull()
+  expect(okay(/yes, let's go/i)).toBeNull()
+})
+
+test('the no button pleads harder with every tap, then settles on its last line', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  const said: string[] = [no().textContent ?? '']
+  for (let tap = 0; tap < 5; tap += 1) {
+    await user.click(no())
+    said.push(no().textContent ?? '')
+  }
+
+  expect(said).toEqual([
+    'No',
+    'please',
+    'pretty please',
+    'last time',
+    'please...',
+    // It runs out of things to say and stays there.
+    'please...',
+  ])
 })
 
 test('the no button keeps its label and stays reachable after each tap', async () => {
@@ -55,7 +77,7 @@ test('the no button keeps its label and stays reachable after each tap', async (
 
   await user.click(no())
   expect(no().isConnected).toBe(true)
-  expect(parseFloat(no().style.fontSize)).toBeLessThan(1.0625)
+  expect(parseFloat(no().style.fontSize)).toBeLessThan(1.125)
 
   await user.click(no())
   // Still in the document, so she can keep tapping it if she wants to.
@@ -72,9 +94,31 @@ test('the second-date question follows the same pattern and ends in the celebrat
 
   await user.click(no())
   await user.click(no())
-  await user.click(screen.getByRole('button', { name: /let's go/i }))
+  await user.click(screen.getByRole('button', { name: /yes, let's go/i }))
 
-  expect(heading()).toBe("It's a date, Shruti!")
+  expect(heading()).toBe("It's a date, Shruti.")
+})
+
+test('each screen shows one illustration with a real description', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  const described = () => {
+    const image = screen.getByRole('img')
+    return image.getAttribute('alt') ?? ''
+  }
+
+  expect(described()).toMatch(/bears/i)
+
+  await user.click(no())
+  await user.click(no())
+  await user.click(screen.getByRole('button', { name: /it's okay/i }))
+  expect(described()).toMatch(/carrying a girl/i)
+
+  await user.click(no())
+  await user.click(no())
+  await user.click(screen.getByRole('button', { name: /yes, let's go/i }))
+  expect(described()).toMatch(/close hug/i)
 })
 
 test('the okay button is announced when it appears', async () => {
@@ -87,5 +131,5 @@ test('the okay button is announced when it appears', async () => {
   await user.click(no())
   await user.click(no())
 
-  expect(live()).toMatch(/it's okay button is here now/i)
+  expect(live()).toMatch(/it's okay button has appeared/i)
 })
