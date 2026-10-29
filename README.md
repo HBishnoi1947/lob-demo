@@ -1,32 +1,43 @@
-# React + TypeScript + Vite
+# Sorry, Shruti
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A small two-question page: an apology, then an invitation to a second date.
+The "no" button has opinions about being pressed.
 
-Currently, two official plugins are available:
+## Running it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Checks
+
+```sh
+npm run lint
+npm test
+npm run build
+```
+
+## Deploying
+
+Pushing to `main` builds the site and publishes it to GitHub Pages via
+`.github/workflows/deploy.yml`. Set **Settings → Pages → Source** to
+**GitHub Actions** once; the first push does the rest.
+
+Asset paths are relative (`base: './'` in `vite.config.ts`), so the same build
+works at `https://<user>.github.io/<repo>/` and at a domain root.
+
+## Where things are
+
+| Path | What's in it |
+| --- | --- |
+| `assets/` | The three illustrations |
+| `src/content/screens.ts` | Every word on the page, and which image goes where |
+| `src/lib/jump.ts` | Where the no button is allowed to jump to |
+| `src/components/` | The screens themselves |
+
+## Two things worth keeping
+
+- The no button dodges on tap only, never on hover or focus, so it stays usable
+  with a keyboard or a screen reader.
+- Every animation is switched off under `prefers-reduced-motion`.
