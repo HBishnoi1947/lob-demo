@@ -96,7 +96,7 @@ test('the second-date question follows the same pattern and ends in the celebrat
   await user.click(no())
   await user.click(screen.getByRole('button', { name: /yes, let's go/i }))
 
-  expect(heading()).toBe("It's a date, Shruti.")
+  expect(heading()).toBe("It's a date...")
 })
 
 test('each screen shows one illustration with a real description', async () => {
